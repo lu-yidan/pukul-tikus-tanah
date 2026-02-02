@@ -121,8 +121,8 @@ function playBadSound() {
 }
 
 const karakter = {
-  xi: { img: 'img/xi.png', delta: -2 },  // 打错了惩罚更严重
-  zhang: { img: 'img/zhang.png', delta: +1 },
+  xi: { img: 'img/person/Trump.png', delta: -2 },  // 打错了惩罚更严重
+  zhang: { img: 'img/person/Pelosi.png', delta: +1 },
 };
 
 // 更具震撼力的文案
