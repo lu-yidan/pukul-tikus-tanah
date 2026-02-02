@@ -121,8 +121,29 @@ Replace images in `img/` directory:
 - `tanah.png`: Hole/ground overlay
 - `palu1.png`, `palu2.png`: Cursor hammer images (normal and clicking states)
 
+## Mobile Support
+
+The game is fully responsive and optimized for mobile devices:
+- Touch event handling with no 300ms delay
+- Responsive layout adapts to screen sizes
+- iOS Safari full-screen support
+- Prevents accidental zoom on mobile
+
+## Deployment
+
+This is a pure static website (no build tools required). Deploy to any static hosting:
+- GitHub Pages
+- Vercel
+- Netlify
+- Cloudflare Pages
+- Any web server
+
+See DEPLOY.md for detailed deployment instructions.
+
 ## Notes
 
 - The game includes Chinese text throughout (UI, comments, messages)
 - Character names reference real political figures - content is satirical/commentary in nature
+- Audio uses Web Audio API for Xi character (low frequency alert sound)
+- Original Pop.mp3 used for Zhang character
 - VSCode settings include `ros.distro: humble` which appears unrelated to this web project

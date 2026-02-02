@@ -418,6 +418,11 @@ function pukul() {
 
 tikus.forEach(t => {
   t.addEventListener('click', pukul);
+  // 添加触摸事件支持，移动端体验更好
+  t.addEventListener('touchstart', function(e) {
+    e.preventDefault(); // 防止触发click事件
+    pukul.call(this);
+  }, { passive: false });
 });
 
 if (speedRange) {
