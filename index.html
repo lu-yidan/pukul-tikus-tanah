@@ -4,37 +4,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pukul Tikus Tanah</title>
+  <title>打地鼠小游戏</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <h1>Pukul Tikus Tanah</h1>
+  <div class="app">
+    <header class="header">
+      <div class="title">
+        <h1>反腐败！</h1>
+        <p class="subtitle">点击「开始游戏」后，用锤子敲击冒出头像的坑洞。滑块可以调节出洞速度。</p>
+      </div>
+    </header>
 
-  <button type="button" class="mulai" onclick="mulai()">Mulai!</button>
+    <section class="panel">
+      <div class="panel-left">
+        <button type="button" class="mulai" onclick="mulai()">开始游戏</button>
+        <div class="controls">
+          <label for="speedRange">速度</label>
+          <span class="speed-hint">慢</span>
+          <input type="range" id="speedRange" min="1" max="10" value="5" step="1">
+          <span class="speed-hint">快</span>
+          <span id="speedValue" class="speed-value">5</span>
+        </div>
+        <div class="countdown-row">
+          <span class="countdown-label">倒计时：</span>
+          <span id="countdown" class="countdown-value">30</span>
+          <span class="countdown-unit">秒</span>
+        </div>
+      </div>
 
-  <h2 class="papan-skor">0</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">分数</div>
+          <div class="stat-value papan-skor">0</div>
+        </div>
+      </div>
+    </section>
 
-  <div class="container">
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
-    <div class="tanah">
-      <div class="tikus"></div>
-    </div>
+    <main class="game">
+      <div class="container" aria-label="game board">
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+        <div class="tanah">
+          <div class="tikus"></div>
+        </div>
+      </div>
+    </main>
   </div>
+
+  <dialog id="gameOverDialog">
+    <h2 class="dialog-title">游戏结束</h2>
+    <p id="gameOverText" class="dialog-text"></p>
+    <p id="gameOverScore" class="dialog-text"></p>
+    <div class="dialog-actions">
+      <button type="button" id="restartBtn">重新开始</button>
+      <button type="button" id="closeDialogBtn">关闭</button>
+    </div>
+  </dialog>
 
   <audio src="audio/Pop.mp3" id="pop"></audio>
   <script src="js/script.js"></script>
