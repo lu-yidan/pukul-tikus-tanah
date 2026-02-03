@@ -550,6 +550,40 @@ dialog#gameOverDialog::backdrop {
   white-space: pre-line;
 }
 
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 24px 16px 16px;
+  margin-top: 32px;
+  border-top: 1px solid rgba(31, 42, 68, 0.1);
+}
+
+.copyright {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.6;
+}
+
+.license-notice {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink);
+  opacity: 0.5;
+}
+
+.license-notice a {
+  color: var(--primary-red);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.license-notice a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 @media (max-width: 520px) {
   .panel { grid-template-columns: 1fr; }
   .stats { width: 100%; justify-content: space-between; }

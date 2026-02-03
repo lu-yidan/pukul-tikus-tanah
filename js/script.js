@@ -120,10 +120,27 @@ function playBadSound() {
   }
 }
 
-const karakter = {
-  xi: { img: 'img/person/Trump.png', delta: -2 },  // 打错了惩罚更严重
-  zhang: { img: 'img/person/Pelosi.png', delta: +1 },
-};
+// 坏人列表（打中加分）
+const badGuys = [
+  { id: 'bo_xilai', img: 'img/bad_guys/bo_xilai-removebg-preview.png', name: '薄熙来' },
+  { id: 'guo_boxiong', img: 'img/bad_guys/guo_boxiong-removebg-preview.png', name: '郭伯雄' },
+  { id: 'ling_jihua', img: 'img/bad_guys/ling_jihua-removebg-preview.png', name: '令计划' },
+  { id: 'sun_zhengcai', img: 'img/bad_guys/sun_zhengcai-removebg-preview.png', name: '孙政才' },
+  { id: 'xu_caihou', img: 'img/bad_guys/xu_caihou-removebg-preview.png', name: '徐才厚' },
+  { id: 'zhou_yongkang', img: 'img/bad_guys/zhou_yongkang-removebg-preview.png', name: '周永康' },
+];
+
+// 好人列表（打中扣分）
+const goodGuys = [
+  { id: 'kim', img: 'img/good_guys/kim-removebg-preview.png', name: '金正恩' },
+];
+
+// 分数设定
+const SCORE_HIT_BAD = +1;   // 打中坏人加1分
+const SCORE_HIT_GOOD = -2;  // 打中好人扣2分
+
+// 当前选中的角色信息
+let currentCharacter = null;
 
 // 更具震撼力的文案
 const kataSaatKenaZhang = [
@@ -274,10 +291,23 @@ function munculkanTikus(localGameId) {
 
   tikusElem.classList.remove('pukul');
 
-  // pilih salah satu karakter secara acak: xi / zhang
-  const pick = Math.random() < 0.5 ? 'xi' : 'zhang';
-  tikusElem.dataset.character = pick;
-  tikusElem.style.backgroundImage = `url(${karakter[pick].img})`;
+  // 随机选择：70%概率出现坏人，30%概率出现好人
+  const isBadGuy = Math.random() < 0.7;
+  let character;
+
+  if (isBadGuy) {
+    // 从坏人列表中随机选择
+    character = badGuys[Math.floor(Math.random() * badGuys.length)];
+    tikusElem.dataset.type = 'bad';
+  } else {
+    // 从好人列表中随机选择
+    character = goodGuys[Math.floor(Math.random() * goodGuys.length)];
+    tikusElem.dataset.type = 'good';
+  }
+
+  tikusElem.dataset.characterId = character.id;
+  tikusElem.dataset.characterName = character.name;
+  tikusElem.style.backgroundImage = `url(${character.img})`;
 
   tRandom.classList.add('muncul');
 
@@ -356,14 +386,19 @@ function pukul() {
 
   this.classList.add('pukul');
 
-  const who = this.dataset.character || 'zhang';
-  const scoreDelta = karakter[who]?.delta ?? 0;
+  const characterType = this.dataset.type || 'bad';
+  const characterName = this.dataset.characterName || '未知';
+  const isBadGuy = characterType === 'bad';
+
+  // 计算分数
+  const scoreDelta = isBadGuy ? SCORE_HIT_BAD : SCORE_HIT_GOOD;
   skor += scoreDelta;
 
   this.parentNode.classList.remove('muncul');
 
   // 连击系统
-  if (who === 'zhang') {
+  if (isBadGuy) {
+    // 打中坏人，连击+1
     combo++;
     if (combo > maxCombo) maxCombo = combo;
 
@@ -383,7 +418,7 @@ function pukul() {
 
     screenFlash('gold');
   } else {
-    // 打错了，连击归零
+    // 打中好人，连击归零
     combo = 0;
 
     // 播放错误音效（低频警报）
@@ -405,12 +440,13 @@ function pukul() {
     setTimeout(() => scoreChange.remove(), 1000);
   }
 
-  if (who === 'zhang' && kataSaatKenaZhang.length) {
+  // 显示反馈文字
+  if (isBadGuy && kataSaatKenaZhang.length) {
     const kata = kataSaatKenaZhang[Math.floor(Math.random() * kataSaatKenaZhang.length)];
     showHitText(this.parentNode, kata, true);
   }
 
-  if (who === 'xi' && kataSaatKenaXi.length) {
+  if (!isBadGuy && kataSaatKenaXi.length) {
     const kata = kataSaatKenaXi[Math.floor(Math.random() * kataSaatKenaXi.length)];
     showHitText(this.parentNode, kata, false);
   }
@@ -442,3 +478,14 @@ if (closeDialogBtn) {
     if (gameOverDialog && gameOverDialog.open) gameOverDialog.close();
   });
 }
+
+// 预加载所有角色图片
+function preloadImages() {
+  const allCharacters = [...badGuys, ...goodGuys];
+  allCharacters.forEach(char => {
+    const img = new Image();
+    img.src = char.img;
+  });
+}
+
+preloadImages();

@@ -71,10 +71,11 @@ No automated tests exist. Manual testing only:
 
 ### Key Game Mechanics
 
-- **Character System** (`karakter` object at line 25-28):
-  - `xi`: Decreases score by 1 when hit
-  - `zhang`: Increases score by 1 when hit
-  - Each has associated image and feedback messages
+- **Character System** (dynamic from folders):
+  - `img/bad_guys/`: Corrupt officials (hitting = +1 point)
+  - `img/good_guys/`: Protected figures (hitting = -2 points)
+  - 70% chance to spawn bad guy, 30% chance for good guy
+  - Characters randomly selected from each folder
 
 - **Speed Control** (`getSpeedMsRange()` at line 34-45):
   - Slider ranges from 1 (slowest) to 10 (fastest)
@@ -116,10 +117,13 @@ No automated tests exist. Manual testing only:
 
 ### Visual Assets
 
-Replace images in `img/` directory:
-- `xi.png`, `zhang.png`: Character images (should be transparent PNGs)
+Replace/add images in `img/` directory:
+- `img/bad_guys/*.png`: Corrupt officials (add more to increase variety)
+- `img/good_guys/*.png`: Protected figures (add more to increase variety)
 - `tanah.png`: Hole/ground overlay
 - `palu1.png`, `palu2.png`: Cursor hammer images (normal and clicking states)
+
+To add new characters, simply add PNG images to the respective folder and update the arrays in `js/script.js`.
 
 ## Mobile Support
 
